@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "DubovozkiAndroid"
 include(":app")
- 
+include(":components")
