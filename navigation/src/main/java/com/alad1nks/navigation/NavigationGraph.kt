@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.alad1nks.navigation.bottom.BottomNavigationGraph
 
 @Composable
 fun NavigationGraph(
@@ -19,7 +20,7 @@ fun NavigationGraph(
 
         }
         composable(NavigationItem.MainScreen.route) {
-
+            BottomNavigationGraph()
         }
     }
 }
