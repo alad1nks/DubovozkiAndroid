@@ -21,10 +21,9 @@ dependencyResolutionManagement {
 
 rootProject.name = "DubovozkiAndroid"
 include(":app")
-include(":components")
-include(":navigation")
 include(":feature")
 include(":di")
 include(":core")
 include(":core:ui")
 include(":core:model")
+include(":core:design-system")
