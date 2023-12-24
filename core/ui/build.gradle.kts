@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.androidx.material3)
 
     implementation(project(":core:model"))
+    implementation(project(":core:design-system"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

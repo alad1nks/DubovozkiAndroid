@@ -72,8 +72,9 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
-    implementation(project(":components"))
-    implementation(project(":navigation"))
+    implementation(project(":core:ui"))
+    implementation(project(":core:model"))
+    implementation(project(":feature"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
