@@ -40,6 +40,7 @@ import com.alad1nks.core.design_system.Spinner
 import com.alad1nks.core.model.BusSchedule
 import com.alad1nks.core.ui.BusScheduleScreenState
 import com.alad1nks.core.ui.Content
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.onebone.toolbar.CollapsingToolbar
 import me.onebone.toolbar.CollapsingToolbarScaffold
@@ -121,7 +122,7 @@ fun BusScheduleScreen(
                     Tab(
                         selected = selectedTabIndex == index,
                         onClick = {
-                            coroutineScope.launch {
+                            coroutineScope.launch(Dispatchers.IO) {
                                 pagerState.animateScrollToPage(index)
                             }
                         },
