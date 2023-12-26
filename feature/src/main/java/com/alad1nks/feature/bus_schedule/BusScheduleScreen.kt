@@ -77,7 +77,7 @@ fun BusScheduleScreen(
 
     val scaffoldState = rememberCollapsingToolbarScaffoldState()
     val toolbarState = rememberCollapsingToolbarState()
-    val pagerState = rememberPagerState { 2 }
+    val pagerState = rememberPagerState { directions.size }
     val selectedTabIndex = pagerState.currentPage
 
     val coroutineScope = rememberCoroutineScope()

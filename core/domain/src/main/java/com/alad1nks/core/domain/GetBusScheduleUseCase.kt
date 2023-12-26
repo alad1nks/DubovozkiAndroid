@@ -12,14 +12,25 @@ class GetBusScheduleUseCase @Inject constructor(
 ) {
     operator fun invoke(
         day: String,
-        station: String
+        station: String?
     ): Flow<BusSchedule> = when(station) {
-        "odn" -> MutableStateFlow(BusSchedule(
+        "odn" -> MutableStateFlow(
+            BusSchedule(
                     0,
                     listOf(Bus.Boyish(0, "08:35", Station.ODINTSOVO)),
                     0,
                     listOf(Bus.Boyish(0, "08:35", Station.ODINTSOVO))
-                ))
+                )
+        )
         else -> MutableStateFlow(BusSchedule(0, listOf(Bus.Boyish(0, "09:35", Station.MOLODYOZHNAYA)), 0, listOf(Bus.Boyish(0, "09:35", Station.MOLODYOZHNAYA))))
     }
+
+//    private fun getBusScheduleFromRepository(
+//        day: String,
+//        station: String
+//    ): Flow<Pair<List<Bus>, List<Bus>>> {
+//        return when(station) {
+//            "all" ->
+//        }
+//    }
 }
