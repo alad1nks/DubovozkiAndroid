@@ -22,13 +22,27 @@ fun BusEntity.asExternalModel(): Bus.Boyish = Bus.Boyish(
     station = station.asExternalModel()
 )
 
-fun BusEntity.asExternalModel(
+fun List<BusEntity>.asExternalModel(
     currentTime: Long
+): Pair<Int, List<Bus>> {
+    var firstBus = 0
+    val busList = map {
+        it.asExternalModel(currentTime) { firstBus += 1 }
+    }
+    return Pair(
+        firstBus, busList
+    )
+}
+
+fun BusEntity.asExternalModel(
+    currentTime: Long,
+    onDepartedHandle: () -> Unit
 ): Bus {
     val timeLeft = (dayTime - currentTime) / 60000
     if (timeLeft < 0) {
         val minutesPassed = -timeLeft % 60
         val hoursPassed = -timeLeft / 60
+        onDepartedHandle()
         return Bus.Departed(
             id = id,
             time = dayTimeString,

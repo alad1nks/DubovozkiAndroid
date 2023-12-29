@@ -145,7 +145,7 @@ private fun FilterSpinner(
     var stationsExpanded by remember { mutableStateOf(false) }
     Spinner(
         expanded = stationsExpanded,
-        onDismissRequest = { },
+        onDismissRequest = { stationsExpanded = false },
         onClick = { stationsExpanded = true },
         modifier = modifier
             .padding(16.dp)

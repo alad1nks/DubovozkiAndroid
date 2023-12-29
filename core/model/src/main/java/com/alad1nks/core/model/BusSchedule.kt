@@ -1,8 +1,8 @@
 package com.alad1nks.core.model
 
 data class BusSchedule(
-    val moscowTopBusIndex: Int,
+    val moscowTopBusIndex: Int = 0,
     val moscow: List<Bus>,
-    val dubkiTopBusIndex: Int,
+    val dubkiTopBusIndex: Int = 0,
     val dubki: List<Bus>
 )
