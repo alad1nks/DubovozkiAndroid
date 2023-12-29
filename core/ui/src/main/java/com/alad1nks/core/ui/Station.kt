@@ -7,14 +7,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
 import com.alad1nks.core.model.Station
 
-val Station.color: Color
-    get() =
-        when(this) {
-            Station.ODINTSOVO -> Color.Black
-            Station.SLAVYANKA -> Color.Green
-            Station.MOLODYOZHNAYA -> Color.Green
-        }
-
 @Composable
 fun Station.timeContent(time: String): @Composable () -> Unit = {
     when(this) {
@@ -45,20 +37,20 @@ fun Station.nameContent(): @Composable () -> Unit = {
     when(this) {
         Station.ODINTSOVO ->
             Text(
-                text = "Одинцово",
+                text = title,
                 fontSize = 16.sp
             )
 
         Station.SLAVYANKA ->
             Text(
-                text = "Славянский б-р",
+                text = title,
                 color = color,
                 fontSize = 16.sp
             )
 
         Station.MOLODYOZHNAYA ->
             Text(
-                text = "Молодёжная",
+                text = title,
                 color = color,
                 fontSize = 16.sp
             )
@@ -70,23 +62,38 @@ fun Station.nameContentDeparted(): @Composable () -> Unit = {
     when(this) {
         Station.ODINTSOVO ->
             Text(
-                text = "Одинцово",
+                text = title,
                 color = MaterialTheme.colorScheme.inverseOnSurface,
                 fontSize = 16.sp
             )
 
         Station.SLAVYANKA ->
             Text(
-                text = "Славянский б-р",
+                text = title,
                 color = MaterialTheme.colorScheme.inverseOnSurface,
                 fontSize = 16.sp
             )
 
         Station.MOLODYOZHNAYA ->
             Text(
-                text = "Молодёжная",
+                text = title,
                 color = MaterialTheme.colorScheme.inverseOnSurface,
                 fontSize = 16.sp
             )
     }
 }
+
+private val Station.title: String
+    get() = when(this) {
+        Station.ODINTSOVO -> "Одинцово"
+        Station.SLAVYANKA -> "Славянский б-р"
+        Station.MOLODYOZHNAYA -> "Молодёжная"
+    }
+
+private val Station.color: Color
+    get() =
+        when(this) {
+            Station.ODINTSOVO -> Color.Black
+            Station.SLAVYANKA -> Color.Green
+            Station.MOLODYOZHNAYA -> Color.Green
+        }

@@ -7,7 +7,7 @@ import com.alad1nks.core.domain.GetBusScheduleUseCase
 import com.alad1nks.core.ui.BusScheduleQueryState
 import com.alad1nks.core.ui.BusScheduleScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -27,7 +27,7 @@ class BusScheduleViewModel @Inject constructor(
         MutableStateFlow(BusScheduleQueryState())
     val queryState: StateFlow<BusScheduleQueryState> get() = _queryState.asStateFlow()
 
-    @OptIn(FlowPreview::class)
+    @OptIn(ExperimentalCoroutinesApi::class)
     val screenState: StateFlow<BusScheduleScreenState> =
         _queryState.flatMapConcat {
             flowOf(

@@ -38,6 +38,7 @@ dependencies {
 
     implementation(libs.hilt.android)
     implementation(project(":core:model"))
+    implementation(project(":core:database"))
     kapt(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
