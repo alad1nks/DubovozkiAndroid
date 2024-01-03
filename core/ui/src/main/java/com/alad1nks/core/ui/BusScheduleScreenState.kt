@@ -21,5 +21,5 @@ sealed interface BusScheduleScreenState {
 
 data class BusScheduleQueryState(
     val day: MenuItem = MenuItem("Сегодня", "tod"),
-    val station: MenuItem = MenuItem("Все станции", "all")
+    val station: MenuItem = MenuItem("Все станции", "%%")
 )

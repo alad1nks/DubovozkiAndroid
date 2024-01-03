@@ -10,13 +10,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface BusScheduleDao {
 
-    @Query("SELECT * FROM bus_schedule WHERE direction = 'msk' and day = :day and station like :station")
+    @Query("SELECT * FROM bus_schedule WHERE direction = 'msk' AND day = :day AND station LIKE :station")
     fun getMoscowBusEntities(
         day: Int,
         station: String = ""
     ): Flow<List<BusEntity>>
 
-    @Query("SELECT * FROM bus_schedule WHERE direction = 'dbk' and day = :day and station like :station")
+    @Query("SELECT * FROM bus_schedule WHERE direction = 'dbk' AND day = :day AND station LIKE :station")
     fun getDubkiBusEntities(
         day: Int,
         station: String = ""
