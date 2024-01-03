@@ -1,6 +1,7 @@
 package com.alad1nks.core.data.repository
 
 import com.alad1nks.core.model.BusSchedule
+import com.alad1nks.core.model.RevisionResponse
 import kotlinx.coroutines.flow.Flow
 
 interface BusScheduleRepository {
@@ -13,4 +14,6 @@ interface BusScheduleRepository {
         day: Int,
         station: String
     ): Flow<BusSchedule>
+
+    suspend fun refreshBusSchedule(): RevisionResponse
 }

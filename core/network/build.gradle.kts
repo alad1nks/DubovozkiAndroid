@@ -2,11 +2,12 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.hilt)
+    id("kotlinx-serialization")
     kotlin("kapt")
 }
 
 android {
-    namespace = "com.alad1nks.core.data"
+    namespace = "com.alad1nks.core.network"
     compileSdk = 34
 
     defaultConfig {
@@ -36,10 +37,12 @@ android {
 
 dependencies {
 
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.okhttp.logging)
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.kotlin.serialization)
+
     implementation(libs.hilt.android)
-    implementation(project(":core:model"))
-    implementation(project(":core:database"))
-    implementation(project(":core:network"))
     kapt(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
