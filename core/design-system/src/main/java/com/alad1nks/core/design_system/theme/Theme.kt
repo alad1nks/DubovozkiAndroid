@@ -1,4 +1,4 @@
-package com.alad1nks.dubovozki.ui.theme
+package com.alad1nks.core.design_system.theme
 
 import android.app.Activity
 import android.os.Build
@@ -9,7 +9,9 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -80,6 +82,18 @@ private val DarkColors = darkColorScheme(
     scrim = md_theme_dark_scrim,
 )
 
+val LightExtendedColorScheme = ExtendedColorScheme(
+    odintsovo = Color.Black,
+    slavyanka = light_green,
+    molodyozhnaya = light_blue
+)
+
+val DarkExtendedColorScheme = ExtendedColorScheme(
+    odintsovo = Color.White,
+    slavyanka = dark_green,
+    molodyozhnaya = dark_blue
+)
+
 @Composable
 fun DubovozkiAndroidTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -95,6 +109,7 @@ fun DubovozkiAndroidTheme(
         darkTheme -> DarkColors
         else -> LightColors
     }
+    val extendedColorScheme = if (darkTheme)  DarkExtendedColorScheme else LightExtendedColorScheme
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -104,9 +119,13 @@ fun DubovozkiAndroidTheme(
         }
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    CompositionLocalProvider(
+        LocalExtendedColorScheme provides extendedColorScheme
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = MaterialTheme.typography,
+            content = content
+        )
+    }
 }

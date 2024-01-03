@@ -4,7 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.alad1nks.core.design_system.MenuItem
+import com.alad1nks.core.design_system.model.MenuItem
 import com.alad1nks.core.domain.GetBusScheduleUseCase
 import com.alad1nks.core.domain.RefreshBusScheduleUseCase
 import com.alad1nks.core.model.BusSchedule

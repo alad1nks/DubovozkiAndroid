@@ -22,7 +22,6 @@ dependencyResolutionManagement {
 rootProject.name = "DubovozkiAndroid"
 include(":app")
 include(":feature")
-include(":di")
 include(":core")
 include(":core:ui")
 include(":core:model")
@@ -31,3 +30,4 @@ include(":core:domain")
 include(":core:data")
 include(":core:database")
 include(":core:network")
+include(":core:datastore")

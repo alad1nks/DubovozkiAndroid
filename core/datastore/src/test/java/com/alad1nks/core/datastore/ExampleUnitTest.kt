@@ -1,4 +1,4 @@
-package com.alad1nks.di
+package com.alad1nks.core.datastore
 
 import org.junit.Test
 
