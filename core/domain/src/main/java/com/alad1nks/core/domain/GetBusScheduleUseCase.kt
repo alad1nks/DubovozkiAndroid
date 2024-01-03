@@ -1,5 +1,6 @@
 package com.alad1nks.core.domain
 
+import android.util.Log
 import com.alad1nks.core.data.repository.BusScheduleRepository
 import com.alad1nks.core.model.BusSchedule
 import kotlinx.coroutines.flow.Flow
@@ -9,15 +10,15 @@ import javax.inject.Inject
 class GetBusScheduleUseCase @Inject constructor(
     private val repository: BusScheduleRepository
 ) {
-
     operator fun invoke(
         day: String,
         station: String
     ): Flow<BusSchedule> {
-        return repository.getBusSchedule(
-            day = day.asQuery(),
-            station = station
-        )
+        Log.d("sgdhhd", station)
+        return when (day) {
+            ScheduleDay.TODAY -> repository.getTodayBusSchedule(day.asQuery(), station)
+            else -> repository.getBusSchedule(day.asQuery(), station)
+        }
     }
 
     private fun String.asQuery(): Int {

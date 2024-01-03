@@ -55,7 +55,7 @@ fun BusScheduleScreen(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
 ) {
     val stations = listOf(
-        MenuItem("Все станции", "all"),
+        MenuItem("Все станции", "%%"),
         MenuItem("Одинцово", "odn"),
         MenuItem("Молодежная", "mld"),
         MenuItem("Славянский б-р", "slv")
