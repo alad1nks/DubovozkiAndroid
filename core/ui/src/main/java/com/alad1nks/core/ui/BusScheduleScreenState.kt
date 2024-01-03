@@ -1,6 +1,6 @@
 package com.alad1nks.core.ui
 
-import com.alad1nks.core.design_system.MenuItem
+import com.alad1nks.core.design_system.model.MenuItem
 import com.alad1nks.core.model.BusSchedule
 
 sealed interface BusScheduleScreenState {

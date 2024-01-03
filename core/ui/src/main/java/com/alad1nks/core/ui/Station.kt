@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.sp
+import com.alad1nks.core.design_system.theme.LocalExtendedColorScheme
 import com.alad1nks.core.model.Station
 
 @Composable
@@ -13,6 +14,7 @@ fun Station.timeContent(time: String): @Composable () -> Unit = {
         Station.ODINTSOVO ->
             Text(
                 text = time,
+                color = color,
                 fontSize = 24.sp
             )
 
@@ -91,9 +93,10 @@ private val Station.title: String
     }
 
 private val Station.color: Color
+    @Composable
     get() =
         when(this) {
-            Station.ODINTSOVO -> Color.Black
-            Station.SLAVYANKA -> Color.Green
-            Station.MOLODYOZHNAYA -> Color.Green
+            Station.ODINTSOVO -> LocalExtendedColorScheme.current.odintsovo
+            Station.SLAVYANKA -> LocalExtendedColorScheme.current.slavyanka
+            Station.MOLODYOZHNAYA -> LocalExtendedColorScheme.current.molodyozhnaya
         }

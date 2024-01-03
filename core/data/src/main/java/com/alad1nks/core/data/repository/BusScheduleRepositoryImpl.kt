@@ -45,8 +45,9 @@ class BusScheduleRepositoryImpl @Inject constructor(
         }
 
     override suspend fun refreshBusSchedule(): RevisionResponse {
+        val response = dataSource.getBusSchedule()
         dao.clearSchedule()
-        dao.updateSchedule(dataSource.getBusSchedule().busList.map { it.toEntity() })
+        dao.updateSchedule(response.busList.map { it.toEntity() })
         return RevisionResponse.NOT_EQUALS
     }
 
@@ -63,7 +64,7 @@ class BusScheduleRepositoryImpl @Inject constructor(
 
     private fun BusResponse.toEntity(): BusEntity = BusEntity(
         id = id,
-        day = day,
+        day = dayOfWeek,
         dayTime = dayTime,
         dayTimeString = dayTimeString,
         direction = direction,

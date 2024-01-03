@@ -1,4 +1,4 @@
-package com.alad1nks.core.design_system
+package com.alad1nks.core.design_system.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.alad1nks.core.design_system.model.MenuItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
