@@ -35,8 +35,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.alad1nks.core.design_system.MenuItem
-import com.alad1nks.core.design_system.Spinner
+import com.alad1nks.core.design_system.model.MenuItem
+import com.alad1nks.core.design_system.component.Spinner
 import com.alad1nks.core.model.BusSchedule
 import com.alad1nks.core.ui.BusScheduleScreenState
 import com.alad1nks.core.ui.Content

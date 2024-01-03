@@ -28,11 +28,11 @@ fun Bus.Content() {
                                 text = timeLeft,
                                 modifier = Modifier
                                     .background(
-                                        color = Color.Red,
+                                        color = MaterialTheme.colorScheme.error,
                                         shape = MaterialTheme.shapes.small
                                     )
                                     .padding(vertical = 8.dp, horizontal = 12.dp),
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onError,
                                 fontSize = 12.sp
                             )
                         } else {
@@ -79,8 +79,7 @@ fun Bus.Content() {
                 ListItem(
                     modifier = Modifier
                         .padding(8.dp),
-                    headlineContent = {
-                    },
+                    headlineContent = { },
                     leadingContent = station.timeContent(time),
                     trailingContent = station.nameContent()
                 )
