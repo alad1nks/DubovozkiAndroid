@@ -39,8 +39,9 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(project(":core:model"))
     implementation(project(":core:database"))
+    implementation(project(":core:datastore"))
     implementation(project(":core:network"))
-    implementation(project(":core:user-manager"))
+
     kapt(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
