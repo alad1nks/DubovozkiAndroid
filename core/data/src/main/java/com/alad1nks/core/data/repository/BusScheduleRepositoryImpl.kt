@@ -1,13 +1,14 @@
 package com.alad1nks.core.data.repository
 
+import android.util.Log
 import com.alad1nks.core.database.dao.BusScheduleDao
 import com.alad1nks.core.database.entity.BusEntity
 import com.alad1nks.core.database.entity.asExternalModel
+import com.alad1nks.core.datastore.DataStore
 import com.alad1nks.core.model.BusSchedule
 import com.alad1nks.core.model.RevisionResponse
 import com.alad1nks.core.network.NetworkDataSource
 import com.alad1nks.core.network.model.BusResponse
-import com.alad1nks.dubovozki.core.user_manager.UserManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -17,7 +18,7 @@ import javax.inject.Inject
 class BusScheduleRepositoryImpl @Inject constructor(
     private val dao: BusScheduleDao,
     private val dataSource: NetworkDataSource,
-    private val userManager: UserManager
+    private val dataStore: DataStore
 ) : BusScheduleRepository {
     override fun getTodayBusSchedule(
         day: Int,
@@ -48,9 +49,13 @@ class BusScheduleRepositoryImpl @Inject constructor(
 
     override suspend fun refreshBusSchedule(): RevisionResponse {
         val response = dataSource.getBusSchedule()
-        if (userManager.getRevision() == response.revision) {
+        val revision = response.revision
+        if (dataStore.getRevision() == revision) {
+            Log.d("revision", "equals")
             return RevisionResponse.EQUALS
         } else {
+            Log.d("revision", "not_equals")
+            dataStore.updateRevision(revision)
             dao.clearSchedule()
             dao.updateSchedule(response.busList.map { it.toEntity() })
             return RevisionResponse.NOT_EQUALS
