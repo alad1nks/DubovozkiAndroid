@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.alad1nks.core.data"
+    namespace = "com.alad1nks.dubovozki.core.user_manager"
     compileSdk = 34
 
     defaultConfig {
@@ -37,10 +37,7 @@ android {
 dependencies {
 
     implementation(libs.hilt.android)
-    implementation(project(":core:model"))
-    implementation(project(":core:database"))
-    implementation(project(":core:network"))
-    implementation(project(":core:user-manager"))
+    implementation(project(":core:datastore"))
     kapt(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
