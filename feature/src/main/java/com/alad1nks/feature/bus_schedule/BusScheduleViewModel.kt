@@ -43,7 +43,7 @@ class BusScheduleViewModel @Inject constructor(
     private val handler = Handler(Looper.getMainLooper())
     private val updateTask = object : Runnable {
         override fun run() {
-            handler.postDelayed(this, 5_000)
+            handler.postDelayed(this, 30_000)
             viewModelScope.launch(Dispatchers.IO) {
                 offlineRefreshBusScheduleScreenState(_queryState.value)
             }
@@ -102,9 +102,8 @@ class BusScheduleViewModel @Inject constructor(
         schedule: BusSchedule
     ): BusScheduleScreenState {
         return when(this) {
-            RevisionResponse.NOT_EQUALS -> BusScheduleScreenState.Loading(schedule)
-            RevisionResponse.EQUALS -> BusScheduleScreenState.Data(schedule)
             RevisionResponse.NETWORK_ERROR -> BusScheduleScreenState.NetworkError(schedule)
+            else -> BusScheduleScreenState.Data(schedule)
         }
     }
 }

@@ -7,6 +7,7 @@ import com.alad1nks.core.model.BusSchedule
 import com.alad1nks.core.model.RevisionResponse
 import com.alad1nks.core.network.NetworkDataSource
 import com.alad1nks.core.network.model.BusResponse
+import com.alad1nks.dubovozki.core.user_manager.UserManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 class BusScheduleRepositoryImpl @Inject constructor(
     private val dao: BusScheduleDao,
-    private val dataSource: NetworkDataSource
+    private val dataSource: NetworkDataSource,
+    private val userManager: UserManager
 ) : BusScheduleRepository {
     override fun getTodayBusSchedule(
         day: Int,
@@ -46,9 +48,13 @@ class BusScheduleRepositoryImpl @Inject constructor(
 
     override suspend fun refreshBusSchedule(): RevisionResponse {
         val response = dataSource.getBusSchedule()
-        dao.clearSchedule()
-        dao.updateSchedule(response.busList.map { it.toEntity() })
-        return RevisionResponse.NOT_EQUALS
+        if (userManager.getRevision() == response.revision) {
+            return RevisionResponse.EQUALS
+        } else {
+            dao.clearSchedule()
+            dao.updateSchedule(response.busList.map { it.toEntity() })
+            return RevisionResponse.NOT_EQUALS
+        }
     }
 
     private fun getBusScheduleFromDao(
