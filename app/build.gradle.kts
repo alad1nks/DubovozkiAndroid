@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.runtime)
     implementation(project(":core:design-system"))
+    implementation(project(":core:data"))
     ksp(libs.androidx.room.compiler)
 
     implementation(libs.hilt.android)
