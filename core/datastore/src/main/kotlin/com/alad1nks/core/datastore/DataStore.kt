@@ -9,4 +9,8 @@ interface DataStore {
     suspend fun getRevision(): Int
 
     suspend fun updateRevision(revision: Int)
+
+    suspend fun changeDarkMode(isActive: Boolean)
+
+    suspend fun changeDynamicColor(isActive: Boolean)
 }
