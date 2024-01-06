@@ -51,4 +51,16 @@ class LocalDataStore @Inject constructor(
             preferences[PreferencesKeys.REVISION] = revision
         }
     }
+
+    override suspend fun changeDarkMode(isActive: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.DARK_THEME] = isActive
+        }
+    }
+
+    override suspend fun changeDynamicColor(isActive: Boolean) {
+        context.dataStore.edit { preferences ->
+            preferences[PreferencesKeys.DYNAMIC_COLOR] = isActive
+        }
+    }
 }

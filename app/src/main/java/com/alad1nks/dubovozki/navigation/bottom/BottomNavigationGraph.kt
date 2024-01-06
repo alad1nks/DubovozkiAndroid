@@ -17,6 +17,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.alad1nks.feature.bus_schedule.BusScheduleScreen
+import com.alad1nks.feature.settings.SettingsScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -68,6 +69,7 @@ fun BottomNavigationGraph(
             composable(BottomNavigationItem.ServicesScreen.route) {
             }
             composable(BottomNavigationItem.SettingsScreen.route) {
+                SettingsScreen()
             }
         }
     }
