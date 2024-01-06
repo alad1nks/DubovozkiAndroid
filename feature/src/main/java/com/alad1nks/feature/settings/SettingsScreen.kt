@@ -1,14 +1,15 @@
 package com.alad1nks.feature.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -33,7 +34,7 @@ fun SettingsScreen(
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
+            TopAppBar(
                 title = {
                     Text(
                         "Настройки",
@@ -45,36 +46,41 @@ fun SettingsScreen(
         }
     ) { innerPadding ->
         Column(
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier
+                .padding(innerPadding)
         ) {
             Text(
                 text = "Оформление",
-                modifier = Modifier.padding(start = 16.dp, bottom = 16.dp),
+                modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 16.dp),
                 color = MaterialTheme.colorScheme.primary
             )
             ListItem(
+                modifier = Modifier
+                    .clickable {
+                        viewModel.changeDarkMode(!uiState.darkTheme)
+                    },
                 headlineContent = {
                     Text("Тёмная тема")
                 },
                 trailingContent = {
                     Switch(
                         checked = uiState.darkTheme,
-                        onCheckedChange = { checked ->
-                            viewModel.changeDarkMode(checked)
-                        }
+                        onCheckedChange = null
                     )
                 }
             )
             ListItem(
+                modifier = Modifier
+                    .clickable {
+                        viewModel.changeDynamicColor(!uiState.dynamicColor)
+                    },
                 headlineContent = {
                     Text("Динамические цвета")
                 },
                 trailingContent = {
                     Switch(
                         checked = uiState.dynamicColor,
-                        onCheckedChange = { checked ->
-                            viewModel.changeDynamicColor(checked)
-                        }
+                        onCheckedChange = null
                     )
                 }
             )
