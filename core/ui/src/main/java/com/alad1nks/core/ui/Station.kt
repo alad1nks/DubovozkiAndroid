@@ -40,6 +40,7 @@ fun Station.nameContent(): @Composable () -> Unit = {
         Station.ODINTSOVO ->
             Text(
                 text = title,
+                color = color,
                 fontSize = 16.sp
             )
 
