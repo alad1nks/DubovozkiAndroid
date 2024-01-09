@@ -1,12 +1,12 @@
 package com.alad1nks.dubovozki.navigation.bottom
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DepartureBoard
+import androidx.compose.material.icons.filled.DirectionsBusFilled
+import androidx.compose.material.icons.filled.HolidayVillage
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Widgets
-import androidx.compose.material.icons.outlined.DepartureBoard
+import androidx.compose.material.icons.outlined.DirectionsBusFilled
+import androidx.compose.material.icons.outlined.HolidayVillage
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material.icons.outlined.Widgets
 
 sealed interface BottomNavigationItem {
     val route: String
@@ -20,8 +20,8 @@ sealed interface BottomNavigationItem {
             get() = "Расписание"
         override val icon: BottomBarIcon
             get() = BottomBarIcon(
-                selectedIcon = Icons.Filled.DepartureBoard,
-                unselectedIcon = Icons.Outlined.DepartureBoard
+                selectedIcon = Icons.Filled.DirectionsBusFilled,
+                unselectedIcon = Icons.Outlined.DirectionsBusFilled
             )
     }
 
@@ -29,11 +29,11 @@ sealed interface BottomNavigationItem {
         override val route: String
             get() = "services"
         override val title: String
-            get() = "Сервисы"
+            get() = "Главная"
         override val icon: BottomBarIcon
             get() = BottomBarIcon(
-                selectedIcon = Icons.Filled.Widgets,
-                unselectedIcon = Icons.Outlined.Widgets
+                selectedIcon = Icons.Filled.HolidayVillage,
+                unselectedIcon = Icons.Outlined.HolidayVillage
             )
     }
 
