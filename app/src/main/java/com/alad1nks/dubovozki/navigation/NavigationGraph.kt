@@ -5,7 +5,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.alad1nks.core.model.NavigationItem
 import com.alad1nks.dubovozki.navigation.bottom.BottomNavigationGraph
+import com.alad1nks.feature.castellan.CastellanScreen
 
 @Composable
 fun NavigationGraph(
@@ -17,10 +19,12 @@ fun NavigationGraph(
         startDestination = startDestination
     ) {
         composable(NavigationItem.RegistrationScreen.route) {
-
         }
         composable(NavigationItem.MainScreen.route) {
-            BottomNavigationGraph()
+            BottomNavigationGraph(navController = navController)
+        }
+        composable(NavigationItem.CastellanScreen.route) {
+            CastellanScreen(navController = navController)
         }
     }
 }

@@ -40,6 +40,7 @@ fun Station.nameContent(): @Composable () -> Unit = {
         Station.ODINTSOVO ->
             Text(
                 text = title,
+                color = color,
                 fontSize = 16.sp
             )
 
@@ -98,5 +99,5 @@ private val Station.color: Color
         when(this) {
             Station.ODINTSOVO -> LocalExtendedColorScheme.current.odintsovo
             Station.SLAVYANKA -> LocalExtendedColorScheme.current.slavyanka
-            Station.MOLODYOZHNAYA -> LocalExtendedColorScheme.current.molodyozhnaya
+            Station.MOLODYOZHNAYA -> MaterialTheme.colorScheme.primary
         }
