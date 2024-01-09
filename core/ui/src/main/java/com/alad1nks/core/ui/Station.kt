@@ -98,5 +98,5 @@ private val Station.color: Color
         when(this) {
             Station.ODINTSOVO -> LocalExtendedColorScheme.current.odintsovo
             Station.SLAVYANKA -> LocalExtendedColorScheme.current.slavyanka
-            Station.MOLODYOZHNAYA -> LocalExtendedColorScheme.current.molodyozhnaya
+            Station.MOLODYOZHNAYA -> MaterialTheme.colorScheme.primary
         }

@@ -28,11 +28,11 @@ fun Bus.Content() {
                                 text = timeLeft,
                                 modifier = Modifier
                                     .background(
-                                        color = MaterialTheme.colorScheme.error,
+                                        color = Color.Red,
                                         shape = MaterialTheme.shapes.small
                                     )
                                     .padding(vertical = 8.dp, horizontal = 12.dp),
-                                color = MaterialTheme.colorScheme.onError,
+                                color = Color.White,
                                 fontSize = 12.sp
                             )
                         } else {
