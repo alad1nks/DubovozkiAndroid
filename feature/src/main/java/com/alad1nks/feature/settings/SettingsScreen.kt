@@ -15,7 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.alad1nks.core.model.UserData
 
@@ -45,15 +47,16 @@ fun SettingsScreen(
                 }
             )
         }
-    ) { innerPadding ->
+    ) { paddingValues ->
         Column(
             modifier = Modifier
-                .padding(innerPadding)
+                .padding(paddingValues)
         ) {
             Text(
                 text = "Оформление",
-                modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 16.dp),
-                color = MaterialTheme.colorScheme.primary
+                modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
             )
             ListItem(
                 modifier = Modifier
