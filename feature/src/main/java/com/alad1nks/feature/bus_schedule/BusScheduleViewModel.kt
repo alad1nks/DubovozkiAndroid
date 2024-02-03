@@ -2,6 +2,7 @@ package com.alad1nks.feature.bus_schedule
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alad1nks.core.design_system.model.MenuItem
@@ -11,6 +12,7 @@ import com.alad1nks.core.model.BusSchedule
 import com.alad1nks.core.model.RevisionResponse
 import com.alad1nks.core.ui.BusScheduleQueryState
 import com.alad1nks.core.ui.BusScheduleScreenState
+import com.alad1nks.core.ui.State
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,7 +32,7 @@ class BusScheduleViewModel @Inject constructor(
     private val updateBusScheduleUseCase: UpdateBusScheduleUseCase
 ) : ViewModel() {
     private val _screenState: MutableStateFlow<BusScheduleScreenState> =
-        MutableStateFlow(BusScheduleScreenState.Init)
+        MutableStateFlow(BusScheduleScreenState())
     val screenState: StateFlow<BusScheduleScreenState> get() = _screenState.asStateFlow()
 
     private val _queryState: MutableStateFlow<BusScheduleQueryState> =
@@ -38,19 +40,18 @@ class BusScheduleViewModel @Inject constructor(
     val queryState: StateFlow<BusScheduleQueryState> get() = _queryState.asStateFlow()
 
     private val handler = Handler(Looper.getMainLooper())
-    private val updateTask = object : Runnable {
-        override fun run() {
-            handler.postDelayed(this, 30_000)
-            viewModelScope.launch(Dispatchers.IO) {
-                offlineRefreshBusScheduleScreenState(_queryState.value)
-            }
+    private val updateTask = Runnable {
+        Log.d("posp", "sas")
+        viewModelScope.launch {
+            offlineRefreshBusScheduleScreenState(_queryState.value)
         }
     }
 
     init {
+        handler.postDelayed(updateTask, 30_000)
         handler.post(updateTask)
         subscribeToQueryChanges()
-        refreshBusScheduleScreenState(queryState.value)
+        refreshBusScheduleScreenState()
     }
 
     private fun subscribeToQueryChanges() {
@@ -62,12 +63,13 @@ class BusScheduleViewModel @Inject constructor(
             .launchIn(viewModelScope)
     }
 
-    private fun refreshBusScheduleScreenState(
-        query: BusScheduleQueryState
-    ) {
+    fun refreshBusScheduleScreenState() {
         viewModelScope.launch(Dispatchers.IO) {
+            _screenState.update {
+                it.copy(state = State.LOADING)
+            }
             val revisionResponse = updateBusScheduleUseCase()
-            val state = revisionResponse.screenState(getBusSchedule(query))
+            val state = revisionResponse.screenState(getBusSchedule(queryState.value))
             _screenState.emit(state)
         }
     }
@@ -75,7 +77,8 @@ class BusScheduleViewModel @Inject constructor(
     private suspend fun offlineRefreshBusScheduleScreenState(
         query: BusScheduleQueryState
     ) {
-        _screenState.emit(BusScheduleScreenState.Data(getBusSchedule(query)))
+        val schedule = getBusSchedule(query)
+        _screenState.update { it.copy(schedule = schedule) }
     }
 
     private suspend fun getBusSchedule(
@@ -85,23 +88,19 @@ class BusScheduleViewModel @Inject constructor(
     ).first()
 
     fun updateDay(day: MenuItem) {
-        _queryState.update {
-            it.copy(day = day)
-        }
+        _queryState.update { it.copy(day = day) }
     }
 
     fun updateStation(station: MenuItem) {
-        _queryState.update {
-            it.copy(station = station)
-        }
+        _queryState.update { it.copy(station = station) }
     }
 
     private fun RevisionResponse.screenState(
         schedule: BusSchedule
     ): BusScheduleScreenState {
         return when(this) {
-            RevisionResponse.NETWORK_ERROR -> BusScheduleScreenState.NetworkError(schedule)
-            else -> BusScheduleScreenState.Data(schedule)
+            RevisionResponse.NETWORK_ERROR -> BusScheduleScreenState(State.NETWORK_ERROR, schedule)
+            else -> BusScheduleScreenState(State.DATA, schedule)
         }
     }
 }
