@@ -5,12 +5,12 @@ import com.alad1nks.core.model.RevisionResponse
 import java.io.IOException
 import javax.inject.Inject
 
-class RefreshBusScheduleUseCase @Inject constructor(
+class UpdateBusScheduleUseCase @Inject constructor(
     private val repository: BusScheduleRepository
 ) {
     suspend operator fun invoke(): RevisionResponse {
         return try {
-            repository.refreshBusSchedule()
+            repository.updateBusSchedule()
         } catch (e: IOException) {
             return RevisionResponse.NETWORK_ERROR
         }

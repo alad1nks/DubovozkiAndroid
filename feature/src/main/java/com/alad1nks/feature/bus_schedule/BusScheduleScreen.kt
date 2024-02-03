@@ -205,7 +205,6 @@ fun BusScheduleScreenState.Content(
     }
 }
 
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun Schedule(
