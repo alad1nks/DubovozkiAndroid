@@ -6,20 +6,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alad1nks.core.design_system.model.MenuItem
 import com.alad1nks.core.domain.GetBusScheduleUseCase
-import com.alad1nks.core.domain.RefreshBusScheduleUseCase
+import com.alad1nks.core.domain.UpdateBusScheduleUseCase
 import com.alad1nks.core.model.BusSchedule
 import com.alad1nks.core.model.RevisionResponse
 import com.alad1nks.core.ui.BusScheduleQueryState
 import com.alad1nks.core.ui.BusScheduleScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapConcat
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -30,7 +27,7 @@ import javax.inject.Inject
 @HiltViewModel
 class BusScheduleViewModel @Inject constructor(
     private val getBusScheduleUseCase: GetBusScheduleUseCase,
-    private val refreshBusScheduleUseCase: RefreshBusScheduleUseCase
+    private val updateBusScheduleUseCase: UpdateBusScheduleUseCase
 ) : ViewModel() {
     private val _screenState: MutableStateFlow<BusScheduleScreenState> =
         MutableStateFlow(BusScheduleScreenState.Init)
@@ -53,25 +50,26 @@ class BusScheduleViewModel @Inject constructor(
     init {
         handler.post(updateTask)
         subscribeToQueryChanges()
+        refreshBusScheduleScreenState(queryState.value)
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     private fun subscribeToQueryChanges() {
         _queryState
-            .flatMapConcat { flow { emit(getBusScheduleScreenState(it)) } }
             .onEach {
-                _screenState.emit(it)
+                offlineRefreshBusScheduleScreenState(it)
             }
             .flowOn(Dispatchers.IO)
             .launchIn(viewModelScope)
     }
 
-    private suspend fun getBusScheduleScreenState(
+    private fun refreshBusScheduleScreenState(
         query: BusScheduleQueryState
-    ): BusScheduleScreenState {
-        _screenState.emit(BusScheduleScreenState.Loading(getBusSchedule(query)))
-        val revisionResponse = refreshBusScheduleUseCase()
-        return revisionResponse.screenState(getBusSchedule(query))
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val revisionResponse = updateBusScheduleUseCase()
+            val state = revisionResponse.screenState(getBusSchedule(query))
+            _screenState.emit(state)
+        }
     }
 
     private suspend fun offlineRefreshBusScheduleScreenState(
