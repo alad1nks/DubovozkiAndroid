@@ -47,7 +47,7 @@ class BusScheduleRepositoryImpl @Inject constructor(
             )
         }
 
-    override suspend fun refreshBusSchedule(): RevisionResponse {
+    override suspend fun updateBusSchedule(): RevisionResponse {
         val response = dataSource.getBusSchedule()
         val revision = response.revision
         if (dataStore.getRevision() == revision) {
