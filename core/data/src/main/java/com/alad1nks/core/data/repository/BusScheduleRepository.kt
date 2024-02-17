@@ -15,5 +15,5 @@ interface BusScheduleRepository {
         station: String
     ): Flow<BusSchedule>
 
-    suspend fun refreshBusSchedule(): RevisionResponse
+    suspend fun updateBusSchedule(): RevisionResponse
 }

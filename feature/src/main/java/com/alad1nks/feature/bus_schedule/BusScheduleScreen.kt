@@ -35,11 +35,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.alad1nks.core.design_system.model.MenuItem
 import com.alad1nks.core.design_system.component.Spinner
+import com.alad1nks.core.design_system.model.MenuItem
 import com.alad1nks.core.model.BusSchedule
 import com.alad1nks.core.ui.BusScheduleScreenState
 import com.alad1nks.core.ui.Content
+import com.alad1nks.core.ui.State
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.onebone.toolbar.CollapsingToolbar
@@ -52,7 +53,7 @@ import me.onebone.toolbar.rememberCollapsingToolbarState
 @Composable
 fun BusScheduleScreen(
     viewModel: BusScheduleViewModel = hiltViewModel(),
-    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() }
+    snackbarHostState: SnackbarHostState
 ) {
     val stations = listOf(
         MenuItem("Все станции", "%%"),
@@ -96,7 +97,7 @@ fun BusScheduleScreen(
                         .fillMaxWidth()
                 ) {
                     FilterSpinner(
-                        onSelect = {  station ->
+                        onSelect = { station ->
                             viewModel.updateStation(station)
                         },
                         modifier = Modifier.weight(1f),
@@ -130,7 +131,11 @@ fun BusScheduleScreen(
                     )
                 }
             }
-            screenState.Content(pagerState = pagerState, snackbarHostState = snackbarHostState)
+            screenState.Content(
+                viewModel = viewModel,
+                pagerState = pagerState,
+                snackbarHostState = snackbarHostState
+            )
         }
     }
 }
@@ -162,11 +167,12 @@ private fun FilterSpinner(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BusScheduleScreenState.Content(
+    viewModel: BusScheduleViewModel,
     pagerState: PagerState,
     snackbarHostState: SnackbarHostState
 ) {
-    when(this) {
-        is BusScheduleScreenState.Init -> {
+    when(this.state) {
+        State.INIT -> {
             HorizontalPager(
                 state = pagerState
             ) {
@@ -178,13 +184,23 @@ fun BusScheduleScreenState.Content(
                 }
             }
         }
-        is BusScheduleScreenState.Loading -> {
+        State.LOADING -> {
+            HorizontalPager(
+                state = pagerState
+            ) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Schedule(pagerState = pagerState, schedule = schedule)
+                    CircularProgressIndicator()
+                }
+            }
+        }
+        State.DATA -> {
             Schedule(pagerState = pagerState, schedule = schedule)
         }
-        is BusScheduleScreenState.Data -> {
-            Schedule(pagerState = pagerState, schedule = schedule)
-        }
-        is BusScheduleScreenState.NetworkError -> {
+        State.NETWORK_ERROR -> {
             LaunchedEffect(snackbarHostState) {
                 val snackbarResult = snackbarHostState.showSnackbar(
                     message = "Проблемы с соединением",
@@ -196,7 +212,7 @@ fun BusScheduleScreenState.Content(
 
                     }
                     SnackbarResult.ActionPerformed -> {
-
+                        viewModel.refreshBusScheduleScreenState()
                     }
                 }
             }
@@ -204,7 +220,6 @@ fun BusScheduleScreenState.Content(
         }
     }
 }
-
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
