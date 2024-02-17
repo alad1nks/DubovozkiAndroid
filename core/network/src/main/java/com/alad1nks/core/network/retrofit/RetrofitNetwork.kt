@@ -15,7 +15,7 @@ private interface RetrofitNetworkApi {
     suspend fun getBusSchedule(): BusScheduleResponse
 }
 
-private const val BASE_URL = "http://85.193.87.124:8080"
+private const val BASE_URL = "https://dubovozki.ru/router"
 
 @Singleton
 class RetrofitNetwork @Inject constructor(
