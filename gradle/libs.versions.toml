@@ -1,5 +1,5 @@
 [versions]
-agp = "8.4.0-alpha07"
+agp = "8.4.0-alpha10"
 hiltAndroid = "2.50"
 hiltAndroidCompiler = "2.50"
 hiltNavigationCompose = "1.1.0"
@@ -11,10 +11,10 @@ junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 lifecycleRuntimeKtx = "2.7.0"
 activityCompose = "1.8.2"
-composeBom = "2024.01.00"
-navigation = "2.7.6"
-material = "1.7.0-alpha01"
-material3 = "1.2.0-rc01"
+composeBom = "2024.02.00"
+navigation = "2.7.7"
+material = "1.7.0-alpha02"
+material3 = "1.2.0"
 roomKtx = "2.6.1"
 toolbar = "2.3.5"
 ksp = "1.9.21-1.0.16"
@@ -40,7 +40,7 @@ androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version = "1.6.0" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version = "1.6.1" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material-icons = { group = "androidx.compose.material", name = "material-icons-extended", version.ref = "material" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
