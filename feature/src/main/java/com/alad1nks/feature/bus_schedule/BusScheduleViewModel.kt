@@ -2,7 +2,6 @@ package com.alad1nks.feature.bus_schedule
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alad1nks.core.design_system.model.MenuItem
@@ -41,7 +40,6 @@ class BusScheduleViewModel @Inject constructor(
 
     private val handler = Handler(Looper.getMainLooper())
     private val updateTask = Runnable {
-        Log.d("posp", "sas")
         viewModelScope.launch {
             offlineRefreshBusScheduleScreenState(_queryState.value)
         }

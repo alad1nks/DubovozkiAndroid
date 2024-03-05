@@ -1,6 +1,5 @@
 package com.alad1nks.core.data.repository
 
-import android.util.Log
 import com.alad1nks.core.database.dao.BusScheduleDao
 import com.alad1nks.core.database.entity.BusEntity
 import com.alad1nks.core.database.entity.asExternalModel
@@ -51,10 +50,8 @@ class BusScheduleRepositoryImpl @Inject constructor(
         val response = dataSource.getBusSchedule()
         val revision = response.revision
         if (dataStore.getRevision() == revision) {
-            Log.d("revision", "equals")
             return RevisionResponse.EQUALS
         } else {
-            Log.d("revision", "not_equals")
             dataStore.updateRevision(revision)
             dao.clearSchedule()
             dao.updateSchedule(response.busList.map { it.toEntity() })
