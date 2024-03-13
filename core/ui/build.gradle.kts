@@ -40,11 +40,11 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.material3)
-
     implementation(project(":core:model"))
     implementation(project(":core:design-system"))
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.material3)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

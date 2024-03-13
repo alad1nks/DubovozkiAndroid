@@ -48,21 +48,21 @@ android {
 
 dependencies {
 
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material.icons)
-    implementation(libs.androidx.material3)
-    implementation(libs.onebone.toolbar)
-
-    implementation(libs.hilt.android)
-    implementation(libs.androidx.hilt.navigation.compose)
     implementation(project(":core:data"))
-    kapt(libs.hilt.android.compiler)
-
     implementation(project(":core:design-system"))
     implementation(project(":core:domain"))
     implementation(project(":core:model"))
     implementation(project(":core:ui"))
+
+    implementation(libs.androidx.material.icons)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.onebone.toolbar)
+    implementation(platform(libs.androidx.compose.bom))
+
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    kapt(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
