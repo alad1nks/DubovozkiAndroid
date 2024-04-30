@@ -47,15 +47,16 @@ class BusScheduleRepositoryImpl @Inject constructor(
         }
 
     override suspend fun updateBusSchedule(): RevisionResponse {
-        val response = dataSource.getBusSchedule()
-        val revision = response.revision
-        if (dataStore.getRevision() == revision) {
-            return RevisionResponse.EQUALS
+        val remoteRevision = dataSource.getBusScheduleRevision().revision
+        val localRevision = dataStore.getRevision()
+        return if (remoteRevision == localRevision) {
+            RevisionResponse.EQUALS
         } else {
-            dataStore.updateRevision(revision)
+            val response = dataSource.getBusSchedule()
             dao.clearSchedule()
             dao.updateSchedule(response.busList.map { it.toEntity() })
-            return RevisionResponse.NOT_EQUALS
+            dataStore.updateRevision(remoteRevision)
+            RevisionResponse.NOT_EQUALS
         }
     }
 

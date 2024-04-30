@@ -2,6 +2,7 @@ package com.alad1nks.feature.bus_schedule
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alad1nks.core.design_system.model.MenuItem
@@ -39,14 +40,16 @@ class BusScheduleViewModel @Inject constructor(
     val queryState: StateFlow<BusScheduleQueryState> get() = _queryState.asStateFlow()
 
     private val handler = Handler(Looper.getMainLooper())
-    private val updateTask = Runnable {
-        viewModelScope.launch {
-            offlineRefreshBusScheduleScreenState(_queryState.value)
+    private val updateTask = object : Runnable {
+        override fun run() {
+            handler.postDelayed(this, 30_000)
+            viewModelScope.launch(Dispatchers.IO) {
+                offlineRefreshBusScheduleScreenState(_queryState.value)
+            }
         }
     }
 
     init {
-        handler.postDelayed(updateTask, 30_000)
         handler.post(updateTask)
         subscribeToQueryChanges()
         refreshBusScheduleScreenState()
@@ -76,6 +79,7 @@ class BusScheduleViewModel @Inject constructor(
         query: BusScheduleQueryState
     ) {
         val schedule = getBusSchedule(query)
+        Log.d("schedule", schedule.toString())
         _screenState.update { it.copy(schedule = schedule) }
     }
 

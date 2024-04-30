@@ -2,6 +2,7 @@ package com.alad1nks.core.network.retrofit
 
 import com.alad1nks.core.network.NetworkDataSource
 import com.alad1nks.core.network.model.BusScheduleResponse
+import com.alad1nks.core.network.model.BusScheduleRevisionResponse
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -14,16 +15,19 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private interface RetrofitNetworkApi {
-    @GET(value = "bus-schedule")
+    @GET("bus-schedule/list")
     suspend fun getBusSchedule(): BusScheduleResponse
+    @GET("bus-schedule/revision")
+    suspend fun getBusScheduleRevision(): BusScheduleRevisionResponse
 }
 
 private const val BASE_URL = "https://dubovozki.ru/router/"
 
 @Singleton
 class RetrofitNetwork @Inject constructor(
-    networkJson: Json,
+    networkJson: Json
 ) : NetworkDataSource {
+
     private val client = OkHttpClient.Builder().addInterceptor { chain ->
         val requestBuilder = chain.request().newBuilder()
         val response = chain.proceed(requestBuilder.build())
@@ -43,4 +47,7 @@ class RetrofitNetwork @Inject constructor(
         .create(RetrofitNetworkApi::class.java)
 
     override suspend fun getBusSchedule(): BusScheduleResponse = networkApi.getBusSchedule()
+    override suspend fun getBusScheduleRevision(): BusScheduleRevisionResponse =
+        networkApi.getBusScheduleRevision()
+
 }

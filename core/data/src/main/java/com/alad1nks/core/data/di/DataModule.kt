@@ -14,11 +14,11 @@ import dagger.hilt.components.SingletonComponent
 abstract class DataModule {
     @Binds
     internal abstract fun bindsBusScheduleRepository(
-        topicsRepository: BusScheduleRepositoryImpl,
+        topicsRepository: BusScheduleRepositoryImpl
     ): BusScheduleRepository
 
     @Binds
     internal abstract fun bindsUserDataRepository(
-        userDataRepository: UserDataRepositoryImpl,
+        userDataRepository: UserDataRepositoryImpl
     ): UserDataRepository
 }
