@@ -1,6 +1,5 @@
 package com.alad1nks.core.network.di
 
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

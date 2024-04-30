@@ -5,10 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Chat
+import androidx.compose.material.icons.automirrored.outlined.Chat
 import androidx.compose.material.icons.outlined.CurrencyRuble
 import androidx.compose.material.icons.outlined.LocalLaundryService
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -58,7 +58,7 @@ fun ServicesScreen(
                 )
                 ServiceItem(
                     title = "Связаться с разработчиком",
-                    imageVector = Icons.Outlined.Chat,
+                    imageVector = Icons.AutoMirrored.Outlined.Chat,
                     onClick = {
                         uriHandler.openUri("https://t.me/asteslenko")
                     }
@@ -94,7 +94,7 @@ private fun ServiceItem(
                 )
             }
         )
-        Divider(
+        HorizontalDivider(
             modifier = Modifier.padding(horizontal = 16.dp)
         )
     }
